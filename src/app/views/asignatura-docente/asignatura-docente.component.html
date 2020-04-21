@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-align-justify"></i> Distribución de asignaturas
+  </div>
+  <div class="card-body">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th *ngFor="let docente of docentes">
+            <div>
+              <span class="arriba-abajo">{{ docente.nombre }}</span>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th *ngFor="let docente of docentes">
+            <div>
+              <span>{{ docente.horas }}</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asignatura of asignaturas; let i = index">
+          <td *ngIf="i === 0" [attr.rowspan]="asignaturas.length">
+            Curso y paralelo
+          </td>
+          <td>
+            <span>{{ asignatura.nombre }}</span>
+          </td>
+          <td *ngFor="let docente of docentes">
+            <input
+              id="{{ asignatura.id }}_{{ docente.id }}"
+              name="{{ asignatura.id }}"
+              type="radio"
+              (change)="asignar(asignatura.id, docente.id)"
+            />
+          </td>
+        </tr>
+      </tbody>
+      <tfoot></tfoot>
+    </table>
+    <ul class="pagination">
+      <li class="page-item" [class.active]="i==consultaActual" *ngFor="let consulta of consultasTodos; let i = index">
+        <a class="page-link" href="javascript: void(0)" (click)="aplicarConsulta(consulta, i)">{{ consulta.nombre }}</a>
+      </li>
+    </ul>
+  </div>
+</div>
