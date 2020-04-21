@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Asignatura } from './asignatura';
 import { Docente } from './docente';
 import { Consulta } from './consulta';
-import { TipoEntidad } from './TipoEntidad';
+import { TipoEntidad } from './tipoEntidad';
 import { AsignaturaDocenteService } from './asignatura-docente.service';
 
 @Component({

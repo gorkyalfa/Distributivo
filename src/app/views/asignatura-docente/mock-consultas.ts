@@ -1,5 +1,5 @@
 import { Consulta } from './consulta';
-import { TipoEntidad } from './TipoEntidad';
+import { TipoEntidad } from './tipoEntidad';
 
 export const CONSULTAS: Consulta[] = [
   {

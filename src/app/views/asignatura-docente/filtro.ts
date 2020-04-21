@@ -1,4 +1,4 @@
-import { TipoEntidad } from './TipoEntidad';
+import { TipoEntidad } from './tipoEntidad';
 
 export class Filtro {
     id: number;
