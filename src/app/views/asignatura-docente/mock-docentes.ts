@@ -4,12 +4,12 @@ export class GeneradorDocente {
   static docentes: Docente[] = [];
 
   static crearDocentes(): Docente[] {
-    for (let index = 0; index < 30; index++) {
+    for (let index = 0; index < 100; index++) {
       GeneradorDocente.docentes.push({
         id: index,
-        nombre: 'D' + index,
+        nombre: 'Docente ' + index,
         horas: 0,
-        carreraId: 0,
+        carreraId: index % 8,
       });
     }
     return GeneradorDocente.docentes;

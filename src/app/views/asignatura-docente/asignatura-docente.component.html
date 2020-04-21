@@ -1,6 +1,28 @@
 <div class="card">
   <div class="card-header">
-    <i class="fa fa-align-justify"></i> Distribución de asignaturas
+    <div class="card-header-actions">
+      <button
+        type="button"
+        class="btn btn-block btn-primary"
+        (click)="guardar()"
+      >
+        <i class="fa fa-save"></i>
+      </button>
+    </div>
+    <ul class="pagination">
+      <li
+        class="page-item"
+        [class.active]="i == consultaActual"
+        *ngFor="let consulta of consultasTodos; let i = index"
+      >
+        <a
+          class="page-link"
+          href="javascript: void(0)"
+          (click)="aplicarConsulta(consulta, i)"
+          >{{ consulta.nombre }}</a
+        >
+      </li>
+    </ul>
   </div>
   <div class="card-body">
     <table class="table table-sm">
@@ -8,13 +30,18 @@
         <tr>
           <th></th>
           <th></th>
-          <th *ngFor="let docente of docentes">
+          <th></th>
+          <th
+            *ngFor="let docente of docentes"
+            [className]="getClassName(docente.carreraId)"
+          >
             <div>
               <span class="arriba-abajo">{{ docente.nombre }}</span>
             </div>
           </th>
         </tr>
         <tr>
+          <th></th>
           <th></th>
           <th></th>
           <th *ngFor="let docente of docentes">
@@ -32,6 +59,9 @@
           <td>
             <span>{{ asignatura.nombre }}</span>
           </td>
+          <td>
+            <span>{{ asignatura.horas }}</span>
+          </td>
           <td *ngFor="let docente of docentes">
             <input
               id="{{ asignatura.id }}_{{ docente.id }}"
@@ -44,10 +74,5 @@
       </tbody>
       <tfoot></tfoot>
     </table>
-    <ul class="pagination">
-      <li class="page-item" [class.active]="i==consultaActual" *ngFor="let consulta of consultasTodos; let i = index">
-        <a class="page-link" href="javascript: void(0)" (click)="aplicarConsulta(consulta, i)">{{ consulta.nombre }}</a>
-      </li>
-    </ul>
   </div>
 </div>

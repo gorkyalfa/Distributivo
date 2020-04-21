@@ -5,96 +5,89 @@ export const CONSULTAS: Consulta[] = [
   {
     id: 1,
     nombre: 'General',
-    filtros: [
-      {
-        id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
-      },
-    ],
+    filtros: [],
   },
   {
-    id: 1,
+    id: 2,
     nombre: 'Análisis de sistemas',
     filtros: [
       {
         id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
-      },
-    ],
-  },
-  {
-    id: 1,
-    nombre: 'Electrónica',
-    filtros: [
-      {
-        id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
-      },
-    ],
-  },
-  {
-    id: 2,
-    nombre: 'Electricidad',
-    filtros: [
-      {
-        id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
         valor: '1',
       },
     ],
   },
   {
     id: 3,
-    nombre: 'Guía Nacional',
+    nombre: 'Electrónica',
     filtros: [
       {
         id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
-      },
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '2',
+      }
     ],
   },
   {
     id: 4,
-    nombre: 'Desarrollo de Software',
+    nombre: 'Electricidad',
     filtros: [
       {
         id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
-      },
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '3',
+      }
     ],
   },
   {
     id: 5,
-    nombre: 'Marketing',
+    nombre: 'Guía Nacional',
     filtros: [
       {
         id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
-      },
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '4',
+      }
     ],
   },
   {
     id: 6,
+    nombre: 'Desarrollo de Software',
+    filtros: [
+      {
+        id: 1,
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '5',
+      },
+    ],
+  },
+  {
+    id: 7,
+    nombre: 'Marketing',
+    filtros: [
+      {
+        id: 1,
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '6',
+      },
+    ],
+  },
+  {
+    id: 8,
     nombre: 'Diseño de Modas',
     filtros: [
       {
         id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '7',
       },
     ],
   },
@@ -104,9 +97,9 @@ export const CONSULTAS: Consulta[] = [
     filtros: [
       {
         id: 1,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraID',
-        valor: '1',
+        entidad: TipoEntidad.Asignatura,
+        atributo: 'carreraId',
+        valor: '8',
       },
     ],
   },

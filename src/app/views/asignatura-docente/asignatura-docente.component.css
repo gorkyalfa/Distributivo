@@ -1,3 +1,38 @@
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
 .arriba-abajo {
   writing-mode: tb-rl;
+}
+.fondo-darkorange {
+  background-color: darkorange; 
+}
+.fondo-orange {
+  background-color: orange;
+}
+.fondo-lawngreen {
+  background-color: lawngreen;
+}
+.fondo-palegreen {
+  background-color:palegreen; 
+}
+.fondo-coral {
+  background-color:coral; 
+}
+.fondo-cornflowerblue {
+  background-color: cornflowerblue;
+}
+.fondo-mediumorchid {
+  background-color:mediumorchid; 
+}
+.fondo-paleturquoise {
+  background-color: paleturquoise;
+}
+.fondo-yellow {
+  background-color: yellow;
+}
+.fondo-deeppink {
+  background-color: deeppink;
 }

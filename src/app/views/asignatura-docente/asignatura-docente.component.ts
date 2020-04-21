@@ -1,15 +1,15 @@
-import { Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Asignatura } from './asignatura';
-import { Docente } from './docente';
-import { Consulta } from './consulta';
-import { TipoEntidad } from './tipoEntidad';
-import { AsignaturaDocenteService } from './asignatura-docente.service';
+import { Inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { Asignatura } from "./asignatura";
+import { Docente } from "./docente";
+import { Consulta } from "./consulta";
+import { TipoEntidad } from "./tipoEntidad";
+import { AsignaturaDocenteService } from "./asignatura-docente.service";
 
 @Component({
-  templateUrl: 'asignatura-docente.component.html',
-  styleUrls: ['./asignatura-docente.component.css'],
+  templateUrl: "asignatura-docente.component.html",
+  styleUrls: ["./asignatura-docente.component.css"],
 })
 export class AsignaturaDocenteComponent implements OnInit {
   public docentesTodos: Docente[] = [];
@@ -47,15 +47,40 @@ export class AsignaturaDocenteComponent implements OnInit {
   }
 
   llenarDocentes() {
-    this.asignaturaDocenteService
-      .getDocentes()
-      .subscribe((docentes) => (this.docentesTodos = docentes));
+    this.asignaturaDocenteService.getDocentes().subscribe(
+      (docentes) =>
+        (this.docentesTodos = docentes.sort((d1, d2) => {
+          let resultado = d1.carreraId - d2.carreraId;
+          if (resultado === 0) {
+            if (d1.nombre < d2.nombre) {
+              resultado = -1;
+            } else if (d1.nombre > d2.nombre) {
+              resultado = 1;
+            }
+          }
+          return resultado;
+        }))
+    );
   }
 
   llenarAsignaturas() {
-    this.asignaturaDocenteService
-      .getAsignaturas()
-      .subscribe((asignaturas) => (this.asignaturasTodos = asignaturas));
+    this.asignaturaDocenteService.getAsignaturas().subscribe((asignaturas) => {
+      this.asignaturasTodos = asignaturas;
+      this.asignaturasTodos.sort((a, b) => {
+        let resultado = a.carreraId - b.carreraId;
+        if (resultado === 0) {
+          resultado = a.nivel - b.nivel;
+          if (resultado === 0) {
+            if (a.paralelo < a.paralelo) {
+              resultado = -1;
+            } else if (a.paralelo > a.paralelo) {
+              resultado = 1;
+            }
+          }
+        }
+        return resultado;
+      });
+    });
   }
 
   aplicarConsulta(consulta: Consulta, indice: number) {
@@ -68,9 +93,60 @@ export class AsignaturaDocenteComponent implements OnInit {
       .filter((f) => f.entidad === TipoEntidad.Asignatura)
       .forEach((f) => {
         const fi = (value: Asignatura, index: number, array: Asignatura[]) =>
-          value[f.atributo].parseString() === f.valor;
+          value[f.atributo].toString() === f.valor;
         this.asignaturas = this.asignaturas.filter(fi);
       });
+
+    consulta.filtros
+      .filter((f) => f.entidad === TipoEntidad.Docente)
+      .forEach((f) => {
+        const fi = (value: Docente, index: number, array: Docente[]) =>
+          value[f.atributo].toString() === f.valor;
+        this.docentes = this.docentes.filter(fi);
+      });
+  }
+
+  getClassName(carreraId: number): string {
+    switch (carreraId) {
+      case 0:
+        return "fondo-darkorange";
+      case 1:
+        return "fondo-orange";
+      case 2:
+        return "fondo-lawngreen";
+      case 3:
+        return "fondo-palegreen";
+      case 4:
+        return "fondo-coral";
+      case 5:
+        return "fondo-cornflowerblue";
+      case 6:
+        return "fondo-mediumorchid";
+      case 7:
+        return "fondo-paleturquoise";
+      case 8:
+        return "fondo-yellow";
+      case 9:
+        return "fondo-deeppink";
+    }
+    return "";
+  }
+
+  guardar() {
+    this.asignaturas.forEach(
+      (cambio) =>
+        (this.asignaturasTodos.find(
+          (destino) => destino.id === cambio.id
+        ).docenteId = cambio.docenteId)
+    );
+
+    this.docentes.forEach(
+      (cambio) =>
+        (this.docentesTodos.find((destino) => destino.id === cambio.id).horas =
+          cambio.horas)
+    );
+
+    // TODO: actualizar la base de datos con los cambios en asignaturas
   }
 
   ngOnInit(): void {
