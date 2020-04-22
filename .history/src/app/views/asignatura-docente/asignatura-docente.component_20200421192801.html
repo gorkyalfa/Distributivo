@@ -1,8 +1,5 @@
 <div class="card">
   <div class="card-header">
-    <div *ngFor="let alert of alerts">
-      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-    </div>
     <div class="card-header-actions">
       <button
         type="button"
@@ -57,7 +54,7 @@
       <tbody>
         <tr *ngFor="let asignatura of asignaturas; let i = index">
           <td *ngIf="mostrar(i)" [attr.rowspan]="extenderFilas(i)" [className]="getClassName(asignatura.carreraId)">
-            <span class="arriba-abajo" style="width: 20px;">Curso {{asignatura.nivel}}{{asignatura.paralelo}}</span>
+            <span class="arriba-abajo" style="width: fit-content;">Curso {{asignatura.nivel}}{{asignatura.paralelo}}</span>
           </td>
           <td>
             <span>{{ asignatura.nombre }}</span>
@@ -71,7 +68,6 @@
               name="{{ asignatura.id }}"
               type="radio"
               (change)="asignar(asignatura.id, docente.id)"
-              [value]="asignatura.docenteId===null?false:true"
             />
           </td>
         </tr>

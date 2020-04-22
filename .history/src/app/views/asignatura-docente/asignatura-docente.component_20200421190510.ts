@@ -21,8 +21,6 @@ export class AsignaturaDocenteComponent implements OnInit {
 
   public consultaActual = 0;
 
-  alerts: any[] = [];
-
   constructor(
     @Inject(DOCUMENT) public document: any,
     private asignaturaDocenteService: AsignaturaDocenteService
@@ -86,8 +84,6 @@ export class AsignaturaDocenteComponent implements OnInit {
   }
 
   aplicarConsulta(consulta: Consulta, indice: number) {
-    this.add('info', 'Espere un momento');
-
     this.consultaActual = indice;
 
     this.asignaturas = this.asignaturasTodos;
@@ -151,39 +147,14 @@ export class AsignaturaDocenteComponent implements OnInit {
     );
 
     // TODO: actualizar la base de datos con los cambios en asignaturas
-
-    this.add('success', 'Se actualizó la información');
   }
 
   mostrar(indice: number): boolean {
-    if (indice === 0) {
-      return true;
-    }
-    if (this.asignaturas[indice].carreraId === this.asignaturas[indice - 1].carreraId
-      && this.asignaturas[indice].nivel === this.asignaturas[indice - 1].nivel
-      && this.asignaturas[indice].paralelo === this.asignaturas[indice - 1].paralelo) {
-        return false;
-      }
     return true;
   }
 
   extenderFilas(indice: number) {
-    return this.asignaturas.filter(a =>
-    a.carreraId === this.asignaturas[indice].carreraId
-      && a.nivel === this.asignaturas[indice].nivel
-      && a.paralelo === this.asignaturas[indice].paralelo).length;
-  }
-
-  add(tipo: string, mensaje: string): void {
-    this.alerts.push({
-      type: tipo,
-      msg: mensaje,
-      timeout: 3000
-    });
-  }
-
-  onClosed(dismissedAlert: any): void {
-    this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
+    return 1;
   }
 
   ngOnInit(): void {

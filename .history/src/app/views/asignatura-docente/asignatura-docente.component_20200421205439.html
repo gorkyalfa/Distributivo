@@ -66,6 +66,7 @@
             <span>{{ asignatura.horas }}</span>
           </td>
           <td *ngFor="let docente of docentes">
+            <!-- TODO: mapear a la asignatura según -->
             <input
               id="{{ asignatura.id }}_{{ docente.id }}"
               name="{{ asignatura.id }}"

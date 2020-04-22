@@ -1,15 +1,15 @@
-import { Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Asignatura } from './asignatura';
-import { Docente } from './docente';
-import { Consulta } from './consulta';
-import { TipoEntidad } from './tipoEntidad';
-import { AsignaturaDocenteService } from './asignatura-docente.service';
+import { Inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { Asignatura } from "./asignatura";
+import { Docente } from "./docente";
+import { Consulta } from "./consulta";
+import { TipoEntidad } from "./tipoEntidad";
+import { AsignaturaDocenteService } from "./asignatura-docente.service";
 
 @Component({
-  templateUrl: 'asignatura-docente.component.html',
-  styleUrls: ['./asignatura-docente.component.css'],
+  templateUrl: "asignatura-docente.component.html",
+  styleUrls: ["./asignatura-docente.component.css"],
 })
 export class AsignaturaDocenteComponent implements OnInit {
   public docentesTodos: Docente[] = [];
@@ -20,8 +20,6 @@ export class AsignaturaDocenteComponent implements OnInit {
   public asignaturas: Asignatura[] = [];
 
   public consultaActual = 0;
-
-  alerts: any[] = [];
 
   constructor(
     @Inject(DOCUMENT) public document: any,
@@ -86,8 +84,6 @@ export class AsignaturaDocenteComponent implements OnInit {
   }
 
   aplicarConsulta(consulta: Consulta, indice: number) {
-    this.add('info', 'Espere un momento');
-
     this.consultaActual = indice;
 
     this.asignaturas = this.asignaturasTodos;
@@ -113,27 +109,27 @@ export class AsignaturaDocenteComponent implements OnInit {
   getClassName(carreraId: number): string {
     switch (carreraId) {
       case 0:
-        return 'fondo-darkorange';
+        return "fondo-darkorange";
       case 1:
-        return 'fondo-orange';
+        return "fondo-orange";
       case 2:
-        return 'fondo-lawngreen';
+        return "fondo-lawngreen";
       case 3:
-        return 'fondo-palegreen';
+        return "fondo-palegreen";
       case 4:
-        return 'fondo-coral';
+        return "fondo-coral";
       case 5:
-        return 'fondo-cornflowerblue';
+        return "fondo-cornflowerblue";
       case 6:
-        return 'fondo-mediumorchid';
+        return "fondo-mediumorchid";
       case 7:
-        return 'fondo-paleturquoise';
+        return "fondo-paleturquoise";
       case 8:
-        return 'fondo-yellow';
+        return "fondo-yellow";
       case 9:
-        return 'fondo-deeppink';
+        return "fondo-deeppink";
     }
-    return '';
+    return "";
   }
 
   guardar() {
@@ -151,39 +147,6 @@ export class AsignaturaDocenteComponent implements OnInit {
     );
 
     // TODO: actualizar la base de datos con los cambios en asignaturas
-
-    this.add('success', 'Se actualizó la información');
-  }
-
-  mostrar(indice: number): boolean {
-    if (indice === 0) {
-      return true;
-    }
-    if (this.asignaturas[indice].carreraId === this.asignaturas[indice - 1].carreraId
-      && this.asignaturas[indice].nivel === this.asignaturas[indice - 1].nivel
-      && this.asignaturas[indice].paralelo === this.asignaturas[indice - 1].paralelo) {
-        return false;
-      }
-    return true;
-  }
-
-  extenderFilas(indice: number) {
-    return this.asignaturas.filter(a =>
-    a.carreraId === this.asignaturas[indice].carreraId
-      && a.nivel === this.asignaturas[indice].nivel
-      && a.paralelo === this.asignaturas[indice].paralelo).length;
-  }
-
-  add(tipo: string, mensaje: string): void {
-    this.alerts.push({
-      type: tipo,
-      msg: mensaje,
-      timeout: 3000
-    });
-  }
-
-  onClosed(dismissedAlert: any): void {
-    this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
   }
 
   ngOnInit(): void {

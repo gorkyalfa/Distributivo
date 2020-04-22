@@ -182,7 +182,7 @@ export class AsignaturaDocenteComponent implements OnInit {
     });
   }
 
-  onClosed(dismissedAlert: any): void {
+  onClosed(dismissedAlert: AlertComponent): void {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
   }
 

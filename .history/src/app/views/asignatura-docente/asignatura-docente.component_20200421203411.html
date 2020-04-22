@@ -71,7 +71,6 @@
               name="{{ asignatura.id }}"
               type="radio"
               (change)="asignar(asignatura.id, docente.id)"
-              [value]="asignatura.docenteId===null?false:true"
             />
           </td>
         </tr>

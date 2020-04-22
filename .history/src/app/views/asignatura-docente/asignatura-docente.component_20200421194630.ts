@@ -6,6 +6,7 @@ import { Docente } from './docente';
 import { Consulta } from './consulta';
 import { TipoEntidad } from './tipoEntidad';
 import { AsignaturaDocenteService } from './asignatura-docente.service';
+import { AlertComponent } from 'ngx-bootstrap/alert/alert.component';
 
 @Component({
   templateUrl: 'asignatura-docente.component.html',
@@ -86,8 +87,6 @@ export class AsignaturaDocenteComponent implements OnInit {
   }
 
   aplicarConsulta(consulta: Consulta, indice: number) {
-    this.add('info', 'Espere un momento');
-
     this.consultaActual = indice;
 
     this.asignaturas = this.asignaturasTodos;
@@ -151,8 +150,6 @@ export class AsignaturaDocenteComponent implements OnInit {
     );
 
     // TODO: actualizar la base de datos con los cambios en asignaturas
-
-    this.add('success', 'Se actualizó la información');
   }
 
   mostrar(indice: number): boolean {
@@ -182,7 +179,7 @@ export class AsignaturaDocenteComponent implements OnInit {
     });
   }
 
-  onClosed(dismissedAlert: any): void {
+  onClosed(dismissedAlert: AlertComponent): void {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
   }
 

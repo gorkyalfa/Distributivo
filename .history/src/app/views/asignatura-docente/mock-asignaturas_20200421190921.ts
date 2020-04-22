@@ -9,7 +9,7 @@ export class GeneradorAsignatura {
       GeneradorAsignatura.asignaturas.push({
         id: index,
         nombre: 'Asignatura ' + index,
-        horas: ((index % 4) + 1) * 4,
+        horas: 8,
         nivel: index % 6 + 1,
         paralelo: this.paralelos[index % 3],
         carreraId: index % 8,
