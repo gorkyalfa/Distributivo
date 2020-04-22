@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-header">
+    <div *ngFor="let alert of alerts">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+    </div>
+    <div class="card-header-actions">
+      <button
+        type="button"
+        class="btn btn-block btn-primary"
+        (click)="guardar()"
+      >
+        <i class="fa fa-save"></i>
+      </button>
+    </div>
+    <ul class="pagination">
+      <li
+        class="page-item"
+        [class.active]="i == indiceConsultaActual"
+        *ngFor="let consulta of consultas; let i = index"
+      >
+        <a
+          class="page-link"
+          href="javascript: void(0)"
+          (click)="aplicarConsulta(consulta, i)"
+          >{{ consulta.nombre }}</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th
+            *ngFor="let docente of docentes"
+            [className]="getClassName(docente.carreraId)"
+          >
+            <div>
+              <span class="arriba-abajo">{{ docente.nombre }}</span>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th *ngFor="let docente of docentes">
+            <div>
+              <span>{{ docente.horas }}</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asignatura of asignaturas; let i = index">
+          <td *ngIf="mostrar(i)" [attr.rowspan]="extenderFilas(i)" [className]="getClassName(asignatura.carreraId)">
+            <span class="arriba-abajo" style="width: 20px;">Curso {{asignatura.nivel}}{{asignatura.paralelo}}</span>
+          </td>
+          <td>
+            <span>{{ asignatura.nombre }}</span>
+          </td>
+          <td>
+            <span>{{ asignatura.horas }}</span>
+          </td>
+          <td *ngFor="let docente of docentes">
+            <input
+              id="{{ asignatura.id }}_{{ docente.id }}"
+              name="{{ asignatura.id }}"
+              type="radio"
+              (change)="asignarAsignaturaDocente(asignatura.id, docente.id)"
+              [value]="asignatura.docenteId===null?false:true"
+            />
+          </td>
+        </tr>
+      </tbody>
+      <tfoot></tfoot>
+    </table>
+  </div>
+</div>

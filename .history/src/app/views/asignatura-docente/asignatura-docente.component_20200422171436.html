@@ -96,7 +96,7 @@
                   type="radio"
                   [(ngModel)]="asignatura.docenteId"
                   [value]="docente.id"
-                  (click)="calcularHoras(asignatura.id, asignatura.docenteId, docente.id)" />
+                  (change)="calcularHoras(asignatura.docenteId, docente.id)" />
               </td>
             </ng-container>
           </tr>

@@ -14,9 +14,7 @@ export class GeneradorAsignatura {
         paralelo: this.paralelos[index % 3],
         carreraId: index % 8,
         docenteId: null,
-        visible: true,
-        cabeceraVisible: true,
-        cabeceraRowSpam: 1
+        visible: true
       });
     }
     return GeneradorAsignatura.asignaturas;

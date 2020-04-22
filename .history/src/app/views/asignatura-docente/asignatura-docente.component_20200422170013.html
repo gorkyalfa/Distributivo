@@ -94,9 +94,9 @@
                   id="{{ asignatura.id }}_{{ docente.id }}"
                   name="{{ asignatura.id }}"
                   type="radio"
-                  [(ngModel)]="asignatura.docenteId"
-                  [value]="docente.id"
-                  (click)="calcularHoras(asignatura.id, asignatura.docenteId, docente.id)" />
+                  (change)="enlazarAsignaturaDocente(asignatura.id, docente.id)"
+                  [value]="asignatura.docenteId === null?'off':'on'"
+                />
               </td>
             </ng-container>
           </tr>

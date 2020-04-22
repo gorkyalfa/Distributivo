@@ -17,12 +17,6 @@ export const CONSULTAS: Consulta[] = [
         atributo: 'carreraId',
         valor: '1',
       },
-      {
-        id: 2,
-        entidad: TipoEntidad.Docente,
-        atributo: 'carreraId',
-        valor: '1',
-      },
     ],
   },
   {

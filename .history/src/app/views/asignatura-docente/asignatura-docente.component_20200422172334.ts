@@ -102,7 +102,7 @@ export class AsignaturaDocenteComponent implements OnInit {
     this.colocarDocenteNuevo(docenteNuevoId, asignatura.horas);
   }
 
-  private colocarDocenteNuevo(docenteNuevoId: number, horas: number): void {
+  colocarDocenteNuevo(docenteNuevoId: number, horas: number): void {
     const nuevoDocente = this.docentes.find((d) => d.id === docenteNuevoId);
     nuevoDocente.horas = nuevoDocente.horas + horas;
   }

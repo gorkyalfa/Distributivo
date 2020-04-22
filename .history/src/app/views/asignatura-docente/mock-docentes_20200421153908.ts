@@ -10,7 +10,6 @@ export class GeneradorDocente {
         nombre: 'Docente ' + index,
         horas: 0,
         carreraId: index % 8,
-        visible: true
       });
     }
     return GeneradorDocente.docentes;

@@ -96,10 +96,10 @@ export class AsignaturaDocenteComponent implements OnInit {
     this.alerts = this.alerts.filter((alert) => alert !== dismissedAlert);
   }
 
-  calcularHoras(asignaturaId: number, docenteAnteriorId: number, docenteNuevoId: number): void {
+  calcularHoras(asignaturaId: number, docenteAnteriorId: number, evento: any): void {
     const asignatura = this.asignaturas.find((a) => a.id === asignaturaId);
     this.retirarDocenteAnterior(docenteAnteriorId, asignatura.horas);
-    this.colocarDocenteNuevo(docenteNuevoId, asignatura.horas);
+    this.colocarDocenteNuevo(evento, asignatura.horas);
   }
 
   private colocarDocenteNuevo(docenteNuevoId: number, horas: number): void {

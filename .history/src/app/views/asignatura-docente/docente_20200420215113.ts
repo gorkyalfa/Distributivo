@@ -3,5 +3,4 @@ export class Docente {
     nombre: string;
     horas: number;
     carreraId: number;
-    visible: boolean = true;
 }

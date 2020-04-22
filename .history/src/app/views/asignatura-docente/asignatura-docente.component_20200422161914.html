@@ -23,22 +23,12 @@
         [class.active]="i == indiceConsultaActual"
         *ngFor="let consulta of consultas; let i = index"
       >
-      <ng-container *ngIf="i==0; then thenTemplate; else elseTemplate"></ng-container>
-      <ng-template #thenTemplate>
-        <a
-          class="page-link"
-          href="javascript: void(0)"
-          >{{ consulta.nombre }}</a
-        >
-      </ng-template>
-      <ng-template #elseTemplate>
         <a
           class="page-link"
           href="javascript: void(0)"
           (click)="aplicarConsulta(consulta, i)"
           >{{ consulta.nombre }}</a
         >
-      </ng-template>
       </li>
     </ul>
   </div>
@@ -49,29 +39,29 @@
           <th></th>
           <th></th>
           <th></th>
-          <ng-container *ngFor="let docente of docentes">
+          <div *ngFor="let docente of docentes">
             <th *ngIf="docente.visible" [className]="getClassName(docente.carreraId)">
               <div>
                 <span class="arriba-abajo">{{ docente.nombre }}</span>
               </div>
             </th>
-          </ng-container>
+          </div>
         </tr>
         <tr>
           <th></th>
           <th></th>
           <th></th>
-          <ng-container *ngFor="let docente of docentes">
+          <div *ngFor="let docente of docentes">
             <th *ngIf="docente.visible">
               <div>
                 <span>{{ docente.horas }}</span>
               </div>
             </th>
-          </ng-container>
+          </div>
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let asignatura of asignaturas">
+        <div *ngFor="let asignatura of asignaturas">
           <tr *ngIf="asignatura.visible">
             <td
               *ngIf="asignatura.cabeceraVisible"
@@ -88,25 +78,21 @@
             <td>
               <span class="font-weight-bold">{{ asignatura.horas }}</span>
             </td>
-            <ng-container *ngFor="let docente of docentes">
+            <div *ngFor="let docente of docentes">
               <td *ngIf="docente.visible">
                 <input
                   id="{{ asignatura.id }}_{{ docente.id }}"
                   name="{{ asignatura.id }}"
                   type="radio"
-                  [(ngModel)]="asignatura.docenteId"
-                  [value]="docente.id"
-                  (click)="calcularHoras(asignatura.id, asignatura.docenteId, docente.id)" />
+                  (change)="enlazarAsignaturaDocente(asignatura.id, docente.id)"
+                  [value]="!(asignatura.docenteId === null)"
+                />
               </td>
-            </ng-container>
+            </div>
           </tr>
-        </ng-container>
+        </div>
       </tbody>
       <tfoot></tfoot>
     </table>
   </div>
-</div>
-
-<div #detalles *ngFor="let asignatura of asignaturas">
-  <span *ngIf="asignatura.visible">{{asignatura.nombre}}{{asignatura.docenteId}}</span>
 </div>

@@ -26,8 +26,8 @@
       <ng-container *ngIf="i==0; then thenTemplate; else elseTemplate"></ng-container>
       <ng-template #thenTemplate>
         <a
-          class="page-link"
-          href="javascript: void(0)"
+          class="page-link fondo-mediumorchid"
+          href="#detalles"
           >{{ consulta.nombre }}</a
         >
       </ng-template>
@@ -94,9 +94,9 @@
                   id="{{ asignatura.id }}_{{ docente.id }}"
                   name="{{ asignatura.id }}"
                   type="radio"
-                  [(ngModel)]="asignatura.docenteId"
-                  [value]="docente.id"
-                  (click)="calcularHoras(asignatura.id, asignatura.docenteId, docente.id)" />
+                  (change)="enlazarAsignaturaDocente(asignatura.id, docente.id)"
+                  [value]="!(asignatura.docenteId === null)"
+                />
               </td>
             </ng-container>
           </tr>

@@ -88,7 +88,7 @@ export class AsignaturaDocenteComponent implements OnInit {
     this.alerts.push({
       type: tipo,
       msg: mensaje,
-      timeout: 2000,
+      timeout: 3000,
     });
   }
 
@@ -96,21 +96,19 @@ export class AsignaturaDocenteComponent implements OnInit {
     this.alerts = this.alerts.filter((alert) => alert !== dismissedAlert);
   }
 
-  calcularHoras(asignaturaId: number, docenteAnteriorId: number, docenteNuevoId: number): void {
+  enlazarAsignaturaDocente(asignaturaId: number, docenteId: number): void {
     const asignatura = this.asignaturas.find((a) => a.id === asignaturaId);
-    this.retirarDocenteAnterior(docenteAnteriorId, asignatura.horas);
-    this.colocarDocenteNuevo(docenteNuevoId, asignatura.horas);
+    this.retirarDocenteActual(asignatura);
+    const nuevoDocente = this.docentes.find((d) => d.id === docenteId);
+    nuevoDocente.horas = nuevoDocente.horas + asignatura.horas;
+    asignatura.docenteId = docenteId;
   }
 
-  private colocarDocenteNuevo(docenteNuevoId: number, horas: number): void {
-    const nuevoDocente = this.docentes.find((d) => d.id === docenteNuevoId);
-    nuevoDocente.horas = nuevoDocente.horas + horas;
-  }
-
-  private retirarDocenteAnterior(docenteAnteriorId: number, horas: number): void {
-    if (docenteAnteriorId !== null) {
-      const docenteAnterior = this.docentes.find((d) => d.id === docenteAnteriorId);
-      docenteAnterior.horas = docenteAnterior.horas - horas;
+  private retirarDocenteActual(asignatura: Asignatura): void {
+    if (asignatura.docenteId !== null) {
+      const docenteActual = this.docentes.find((d) => d.id === asignatura.docenteId);
+      docenteActual.horas = docenteActual.horas - asignatura.horas;
+      asignatura.docenteId = null;
     }
   }
 
@@ -184,11 +182,19 @@ export class AsignaturaDocenteComponent implements OnInit {
   }
 
   aplicarConsulta(consulta: Consulta, indice: number): void {
-    this.nuevoMensaje('info', 'Espere un momento mientras se actualiza la pantalla');
+    this.nuevoMensaje('info', 'Espere un momento mientras se refresca la pantalla');
     this.indiceConsultaActual = indice;
     this.aplicarCondicionesAsignatura(consulta);
     this.aplicarCondicionesDocente(consulta);
+  }
+
+  asignaturasVisibles(): Asignatura[] {
     this.calcularCabeceras();
+    return this.asignaturas.filter(a => a.visible === true);
+  }
+
+  docentesVisibles(): Docente[] {
+    return this.docentes.filter(d => d.visible === true);
   }
 
   guardar(): void {

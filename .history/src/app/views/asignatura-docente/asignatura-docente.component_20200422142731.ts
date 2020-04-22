@@ -18,44 +18,26 @@ export class AsignaturaDocenteComponent implements OnInit {
 
   constructor(private asignaturaDocenteService: AsignaturaDocenteService) {}
 
-  private calcularCabeceras(): void {
-    this.encerarCabeceras();
-    this.calcularCabeceraVisible();
-    this.calcularCabeceraRowSpan();
+  mostrarCurso(indice: number): boolean {
+    if (indice === 0) {
+      return true;
+    }
+
+    const asignaturasVisibles = this.asignaturasVisibles();
+    return !(
+      this.asignaturasVisibles[indice].carreraId === this.asignaturasVisibles[indice - 1].carreraId
+      && this.asignaturasVisibles[indice].nivel === this.asignaturasVisibles[indice - 1].nivel
+      && this.asignaturasVisibles[indice].paralelo === this.asignaturasVisibles[indice - 1].paralelo
+    );
   }
 
-  private encerarCabeceras(): void {
-    this.asignaturas.forEach(a => {
-      a.cabeceraVisible = false;
-      a.cabeceraRowSpam = 0;
-    });
-  }
-
-  private calcularCabeceraVisible(): void {
-    this.asignaturas.filter(a => a.visible).forEach((actual, indice, arreglo) => {
-      if (indice === 0) {
-        actual.cabeceraVisible = true;
-      } else if (!this.cabecerasIguales(actual, arreglo[indice - 1])) {
-        actual.cabeceraVisible = true;
-      }
-    });
-  }
-
-  private cabecerasIguales(actual: Asignatura, anterior: Asignatura): boolean {
-    return actual.carreraId === anterior.carreraId
-      && actual.nivel === anterior.nivel
-      && actual.paralelo === anterior.paralelo;
-  }
-
-  private calcularCabeceraRowSpan(): void {
-    this.asignaturas.filter(a => a.visible).forEach((actual, indice, arreglo) => {
-      const iguales = arreglo.filter(a =>
-        a.carreraId === actual.carreraId &&
-        a.nivel === actual.nivel &&
-        a.paralelo === actual.paralelo
-      );
-      iguales.forEach(i => i.cabeceraRowSpam = iguales.length);
-    });
+  extenderFilas(indice: number): number {
+    return this.asignaturasVisibles().filter(
+      (a) =>
+        a.carreraId === this.asignaturas[indice].carreraId &&
+        a.nivel === this.asignaturas[indice].nivel &&
+        a.paralelo === this.asignaturas[indice].paralelo
+    ).length;
   }
 
   getClassName(carreraId: number): string {
@@ -88,7 +70,7 @@ export class AsignaturaDocenteComponent implements OnInit {
     this.alerts.push({
       type: tipo,
       msg: mensaje,
-      timeout: 2000,
+      timeout: 3000,
     });
   }
 
@@ -96,21 +78,19 @@ export class AsignaturaDocenteComponent implements OnInit {
     this.alerts = this.alerts.filter((alert) => alert !== dismissedAlert);
   }
 
-  calcularHoras(asignaturaId: number, docenteAnteriorId: number, docenteNuevoId: number): void {
+  enlazarAsignaturaDocente(asignaturaId: number, docenteId: number): void {
     const asignatura = this.asignaturas.find((a) => a.id === asignaturaId);
-    this.retirarDocenteAnterior(docenteAnteriorId, asignatura.horas);
-    this.colocarDocenteNuevo(docenteNuevoId, asignatura.horas);
+    this.retirarDocenteActual(asignatura);
+    const nuevoDocente = this.docentes.find((d) => d.id === docenteId);
+    nuevoDocente.horas = nuevoDocente.horas + asignatura.horas;
+    asignatura.docenteId = docenteId;
   }
 
-  private colocarDocenteNuevo(docenteNuevoId: number, horas: number): void {
-    const nuevoDocente = this.docentes.find((d) => d.id === docenteNuevoId);
-    nuevoDocente.horas = nuevoDocente.horas + horas;
-  }
-
-  private retirarDocenteAnterior(docenteAnteriorId: number, horas: number): void {
-    if (docenteAnteriorId !== null) {
-      const docenteAnterior = this.docentes.find((d) => d.id === docenteAnteriorId);
-      docenteAnterior.horas = docenteAnterior.horas - horas;
+  private retirarDocenteActual(asignatura: Asignatura): void {
+    if (asignatura.docenteId !== null) {
+      const docenteActual = this.docentes.find((d) => d.id === asignatura.docenteId);
+      docenteActual.horas = docenteActual.horas - asignatura.horas;
+      asignatura.docenteId = null;
     }
   }
 
@@ -184,11 +164,18 @@ export class AsignaturaDocenteComponent implements OnInit {
   }
 
   aplicarConsulta(consulta: Consulta, indice: number): void {
-    this.nuevoMensaje('info', 'Espere un momento mientras se actualiza la pantalla');
+    this.nuevoMensaje('info', 'Espere un momento mientras se refresca la pantalla');
     this.indiceConsultaActual = indice;
     this.aplicarCondicionesAsignatura(consulta);
     this.aplicarCondicionesDocente(consulta);
-    this.calcularCabeceras();
+  }
+
+  asignaturasVisibles(): Asignatura[] {
+    return this.asignaturas.filter(a => a.visible === true);
+  }
+
+  docentesVisibles(): Docente[] {
+    return this.docentes.filter(d => d.visible === true);
   }
 
   guardar(): void {
