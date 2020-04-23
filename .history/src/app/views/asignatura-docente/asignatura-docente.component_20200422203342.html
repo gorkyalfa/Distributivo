@@ -1,0 +1,189 @@
+<div *ngFor="let alert of alerts">
+  <alert
+    [type]="alert.type"
+    [dismissOnTimeout]="alert.timeout"
+    (onClosed)="onClosed(alert)"
+    >{{ alert.msg }}</alert
+  >
+</div>
+<div id=trabajo *ngIf="trabajo">
+  <div class="card">
+  <div class="card-header">
+    <div class="card-header-actions">
+      <button
+        type="button"
+        class="btn btn-block btn-primary"
+        (click)="guardar()"
+      >
+        <i class="fa fa-save"></i>
+      </button>
+    </div>
+    <ul class="pagination">
+      <li class="page-item">
+        <button
+        type="button"
+        class="btn btn-default"
+        (click)="intercambiarVista()"
+      >
+        <i class="fa fa-cog"></i>
+      </button>
+      </li>
+      <li
+        class="page-item"
+        [class.active]="i == indiceConsultaActual"
+        *ngFor="let consulta of consultas; let i = index"
+      >
+      <ng-container *ngIf="i==0; then thenTemplate; else elseTemplate"></ng-container>
+      <ng-template #thenTemplate>
+        <a
+          class="page-link"
+          href="javascript: void(0)"
+          >{{ consulta.nombre }}</a
+        >
+      </ng-template>
+      <ng-template #elseTemplate>
+        <a
+          class="page-link"
+          href="javascript: void(0)"
+          (click)="aplicarConsulta(consulta, i)"
+          >{{ consulta.nombre }}</a
+        >
+      </ng-template>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <ng-container *ngFor="let docente of docentes">
+            <th *ngIf="docente.visible" [className]="getClassName(docente.carreraId)">
+              <div>
+                <span class="arriba-abajo">{{ docente.nombre }}</span>
+              </div>
+            </th>
+          </ng-container>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <ng-container *ngFor="let docente of docentes">
+            <th *ngIf="docente.visible">
+              <div>
+                <span>{{ docente.horas }}</span>
+              </div>
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let asignatura of asignaturas">
+          <tr *ngIf="asignatura.visible">
+            <td
+              *ngIf="asignatura.cabeceraVisible"
+              [attr.rowspan]="asignatura.cabeceraRowSpam"
+              [className]="getClassName(asignatura.carreraId)"
+            >
+              <span class="arriba-abajo" style="width: 20px;"
+                >Curso {{ asignatura.nivel }}{{ asignatura.paralelo }}</span
+              >
+            </td>
+            <td>
+              <span>{{ asignatura.nombre }}</span>
+            </td>
+            <td>
+              <span class="font-weight-bold">{{ asignatura.horas }}</span>
+            </td>
+            <ng-container *ngFor="let docente of docentes">
+              <td *ngIf="docente.visible">
+                <input
+                  id="{{ asignatura.id }}_{{ docente.id }}"
+                  name="{{ asignatura.id }}"
+                  type="radio"
+                  [(ngModel)]="asignatura.docenteId"
+                  [value]="docente.id"
+                  (click)="calcularHoras(asignatura.id, asignatura.docenteId, docente.id)" />
+              </td>
+            </ng-container>
+          </tr>
+        </ng-container>
+      </tbody>
+      <tfoot></tfoot>
+    </table>
+  </div>
+  </div>
+</div>
+<div id="configurarConsultas" *ngIf="!trabajo">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-actions">
+        <button
+          type="button"
+          class="btn btn-block btn-primary"
+          (click)="guardar()"
+        >
+          <i class="fa fa-save"></i>
+        </button>
+      </div>
+      <h3>
+        <span>Configuración de las consultas de asignaturas y docentes</span>
+      </h3>
+      <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="intercambiarVista()"
+        >
+          <i class="fa fa-cog"></i>
+        </button>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <tbody>
+          <tr *ngFor="let consulta of consultas">
+            <td>
+              <input type="hidden" [(ngModel)]="consulta.id"/>
+            </td>
+            <td>
+              <input type="text" [(ngModel)]="consulta.nombre"/>
+            </td>
+            <td>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Entidad</th>
+                    <th>Atributo</th>
+                    <th>valor</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let filtro of consulta.filtros">
+                    <td>
+                      <input type="hidden" [(ngModel)]="filtro.id"/>
+                    </td>
+                    <td>
+                      <input type="number" [(ngModel)]="filtro.entidad"/>
+                    </td>
+                    <td>
+                      <input type="text" [(ngModel)]="filtro.atributo"/>
+                    </td>
+                    <td>
+                      <input type="text" [(ngModel)]="filtro.valor"/>
+                    </td>
+                    <td><i class="fa fa-minus" (click)="borrarFiltro(consulta.id, filtro.id)"></i></td>
+                  </tr>
+                </tbody>
+              </table>  
+            </td>
+            <td><i class="fa fa-plus" (click)="nuevoFiltro(consulta.id)"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

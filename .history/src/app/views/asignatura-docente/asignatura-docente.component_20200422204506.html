@@ -22,7 +22,7 @@
         <li class="page-item">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-default"
             (click)="intercambiarVista()"
           >
             <i class="fa fa-cog"></i>
@@ -130,15 +130,6 @@
 <div id="configurarConsultas" *ngIf="!trabajo">
   <div class="card">
     <div class="card-header">
-      <div class="card-header-actions">
-        <button
-          type="button"
-          class="btn btn-block btn-primary"
-          (click)="guardar()"
-        >
-          <i class="fa fa-save"></i>
-        </button>
-      </div>
       <ul class="pagination">
         <li class="page-item">
           <button
@@ -150,10 +141,20 @@
           </button>
         </li>
         <li class="page-item">
-          <h4>&nbsp;Configuración de las consultas de asignaturas y docentes
-          </h4>
+          <a class="page-link" href="javascript: void(0)"
+            >Configuración de las consultas de asignaturas y docentes</a
+          >
         </li>
       </ul>
+      <div class="card-header-actions">
+        <button
+          type="button"
+          class="btn btn-block btn-primary"
+          (click)="guardar()"
+        >
+          <i class="fa fa-save"></i>
+        </button>
+      </div>
     </div>
     <div class="card-body">
       <table class="table table-striped">
