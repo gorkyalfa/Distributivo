@@ -199,24 +199,24 @@ export class AsignaturaDocenteComponent implements OnInit {
       'warning',
       'El proceso de almacenamiento está en proceso de construcción..'
     );
-    this.asignaturaDocenteService.putAsignaciones(this.asignaturas).subscribe((asignaturasAfectados: number) => {
+    this.asignaturaDocenteService.putAsignaciones(this.asignaturas).subscribe((afectados) => {
       this.nuevoMensaje(
         'warning',
-        `Se afectaron ${asignaturasAfectados} asignaturas.`
+        `Se afectaron ${afectados} asignaturas.`
       );
     });
-    this.asignaturaDocenteService.deleteFiltros(this.filtrosParaBorrar).subscribe((filtrosAfectados: number) => {
+    this.asignaturaDocenteService.deleteFiltros(this.filtrosParaBorrar).subscribe((afectados) => {
       this.nuevoMensaje(
         'warning',
-        `Se afectaron ${filtrosAfectados} filtros.`
+        `Se afectaron ${afectados} filtros.`
       );
-    });
-    this.asignaturaDocenteService.postConsultas(this.consultas).subscribe((consultasAfectados: number) => {
+    this.asignaturaDocenteService.postConsultas(this.consultas).subscribe((afectados) => {
       this.nuevoMensaje(
         'warning',
-        `Se afectaron ${consultasAfectados} consultas.`
+        `Se afectaron ${afectados} consultas.`
       );
     });
+
   }
 
   intercambiarVista(): void {

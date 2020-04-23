@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Asignatura } from './asignatura';
 import { Docente } from './docente';
 import { Consulta } from './consulta';
-import { Filtro } from './filtro';
 import { TipoEntidad } from './tipoEntidad';
 import { AsignaturaDocenteService } from './asignatura-docente.service';
 
@@ -14,10 +13,8 @@ export class AsignaturaDocenteComponent implements OnInit {
   public docentes: Docente[] = [];
   public asignaturas: Asignatura[] = [];
   public consultas: Consulta[] = [];
-  filtrosParaBorrar: Filtro[] = [];
   public indiceConsultaActual = 0;
   alerts: any[] = [];
-  trabajo: boolean = true;
 
   constructor(private asignaturaDocenteService: AsignaturaDocenteService) {}
 
@@ -199,47 +196,12 @@ export class AsignaturaDocenteComponent implements OnInit {
       'warning',
       'El proceso de almacenamiento está en proceso de construcción..'
     );
-    this.asignaturaDocenteService.putAsignaciones(this.asignaturas).subscribe((asignaturasAfectados: number) => {
+    this.asignaturaDocenteService.putAsignaciones(this.asignaturas).subscribe((afectados) => {
       this.nuevoMensaje(
         'warning',
-        `Se afectaron ${asignaturasAfectados} asignaturas.`
+        `Se afectaron ${afectados} registros.`
       );
     });
-    this.asignaturaDocenteService.deleteFiltros(this.filtrosParaBorrar).subscribe((filtrosAfectados: number) => {
-      this.nuevoMensaje(
-        'warning',
-        `Se afectaron ${filtrosAfectados} filtros.`
-      );
-    });
-    this.asignaturaDocenteService.postConsultas(this.consultas).subscribe((consultasAfectados: number) => {
-      this.nuevoMensaje(
-        'warning',
-        `Se afectaron ${consultasAfectados} consultas.`
-      );
-    });
-  }
-
-  intercambiarVista(): void {
-    this.trabajo = !this.trabajo;
-  }
-
-  borrarFiltro(consultaId: number, filtroId: number): void {
-    const indiceParaBorrar = this.consultas.find(c => c.id === consultaId).filtros.findIndex(f => f.id === filtroId);
-    const filtroParaBorrar = this.consultas.find(c => c.id === consultaId).filtros.splice(indiceParaBorrar, 1)[0];
-    if (filtroId > 0) {
-      this.filtrosParaBorrar.push(filtroParaBorrar);
-    }
-  }
-
-  nuevoFiltro(consultaId: number): void {
-    const filtro: Filtro = {
-      id: this.consultas.reduce((min, p) => p.id < min ? p.id : min, this.consultas[0].id) - 1,
-      entidad: TipoEntidad.Asignatura,
-      atributo: '',
-      valor: '',
-    };
-
-    this.consultas.find(c => c.id === consultaId).filtros.push(filtro);
   }
 
   ngOnInit(): void {

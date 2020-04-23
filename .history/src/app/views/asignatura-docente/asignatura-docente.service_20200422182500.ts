@@ -6,7 +6,6 @@ import { CONSULTAS } from './mock-consultas';
 import { Asignatura } from './asignatura';
 import { Docente } from './docente';
 import { Consulta } from './consulta';
-import { Filtro } from './filtro';
 
 @Injectable({
   providedIn: 'root'
@@ -34,16 +33,6 @@ export class AsignaturaDocenteService {
   }
 
   putAsignaciones(asignaturas: Asignatura[]): Observable<number> {
-    // TODO: devuelve el número de registros afectados
-    return of(0);
-  }
-
-  deleteFiltros(filtrosParaBorrar: Filtro[]): Observable<number> {
-    // TODO: devuelve el número de registros afectados
-    return of(0);
-  }
-
-  postConsultas(consultas: Consulta[]): Observable<number> {
     // TODO: devuelve el número de registros afectados
     return of(0);
   }
